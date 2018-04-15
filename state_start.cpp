@@ -11,6 +11,30 @@ state_start::state_start(std::string state_name) :
     ADD_UNGUARDED_TRANSITION (ev_start,   state_start                     );
 }
 
+state_start::~state_start()
+{
+}
+
+void state_start::entry()
+{
+    printf("void state_start::entry()\r\n");
+    // this state has a child state machine
+    if (mp_parent_machine != nullptr)
+    {
+        mp_child_machine = new state_machine::machine(mp_parent_machine->name() + "::sub_start");
+        mp_child_machine->start(CREATE_STATE(state_middle));
+    }
+    else
+    {
+        printf("ERROR: Nullptr\r\n");
+    }
+}
+
+void state_start::exit()
+{
+    printf("void state_start::exit()\r\n");
+}
+
 bool state_start::true_guard()
 {
     printf("state_start::true_guard() - passed\r\n");

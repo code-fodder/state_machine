@@ -9,3 +9,7 @@ state_middle::state_middle(std::string state_name) :
     ADD_UNGUARDED_TRANSITION (ev_middle, state_middle                     );
 }
 
+state_middle::~state_middle()
+{
+}
+
