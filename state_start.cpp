@@ -9,6 +9,8 @@ state_start::state_start(std::string state_name) :
     ADD_GUARDED_TRANSITION   (ev_middle,  state_middle,   false_guard     );
     ADD_GUARDED_TRANSITION   (ev_middle,  state_middle,   true_guard      );
     ADD_UNGUARDED_TRANSITION (ev_start,   state_start                     );
+
+    PRINT_PLANT_UML
 }
 
 state_start::~state_start()

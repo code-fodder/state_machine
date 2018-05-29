@@ -3,22 +3,27 @@
 #include <map>
 #include <iostream>
 
+// Plantuml printing
+#define PRINT_PLANT_UML \
+    static bool plantuml_print_once = true; \
+    if (plantuml_print_once) \
+    { \
+        print_plantuml(); \
+    } \
+    plantuml_print_once = false;
+
 // These defines are used to create/change the states and add transitions
 #define CREATE_STATE(state_name) new state_name(#state_name)
-#define CHANGE_STATE(p_state, p_new_state) \
-    p_state->exit(); \
-    std::cout << "STATE MACHINE " << m_name << ": " << p_state->state_name() << " --> " << p_new_state->state_name() << std::endl; \
-    delete p_state; \
-    p_state = p_new_state; \
-    mp_current_state->set_parent(this); \
-    p_state->entry();
 #define ADD_GUARDED_TRANSITION(tr_event_id, tr_next_state, tr_guard_fn) \
         m_transitions.insert( \
             std::make_pair( \
                 tr_event_id, \
                 state_machine::transition{\
                     [this](){ return new tr_next_state(#tr_next_state); }, \
-                    [this](){ return this->tr_guard_fn(); }\
+                    [this](){ return this->tr_guard_fn(); },\
+                    #tr_next_state, \
+                    #tr_event_id, \
+                    #tr_guard_fn \
                 } \
             ) \
         );
@@ -28,11 +33,13 @@
                 tr_event_id, \
                 state_machine::transition{\
                     [this](){ return new tr_next_state(#tr_next_state); }, \
-                    nullptr \
+                    nullptr, \
+                    #tr_next_state, \
+                    #tr_event_id, \
+                    "" \
                 } \
             ) \
         );
-
 
 // Some events... should not be here - should be specific for each state header (I think, or maybe globally for a specific state machine)
 enum state_events
@@ -56,6 +63,9 @@ namespace state_machine
     {
         std::function<state *()> get_next_state;
         std::function<bool()> guard_function;
+        std::string next_state_str;
+        std::string event_str;
+        std::string guard_fn_str;
     };
 
     class state
@@ -80,6 +90,8 @@ namespace state_machine
         virtual void exit() {std::cout << m_state_name << " - exit" << std::endl;}
         void set_parent(machine *p_parent) { mp_parent_machine = p_parent;}
 
+        void print_plantuml();
+
         std::string m_state_name;
         std::multimap<int, transition> m_transitions;
         machine *mp_parent_machine;
@@ -93,7 +105,7 @@ namespace state_machine
         void start(state *p_default_state);
         bool process_event(int event);
         void exit_machine() { m_machine_running = false; }
-        std::string name() { return m_name; }
+        std::string name() { return m_name; }        
 
     private:
         std::string m_name;
