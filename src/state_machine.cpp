@@ -42,6 +42,16 @@ state_machine::machine::machine(std::string name) :
 {
 }
 
+state_machine::machine::~machine()
+{
+    // Clear any states that are left
+    std::cout << "SM: ~" << m_name << "(), deleting current state" << std::endl;
+    if (mp_current_state)
+    {
+        delete mp_current_state;
+    }
+}
+
 void state_machine::machine::start(state *p_default_state)
 {
     mp_current_state = p_default_state;

@@ -1,6 +1,7 @@
 #include "state_start.h"
 #include "state_middle.h"
-
+#include <chrono>
+#include <thread>
 
 state_start::state_start(std::string state_name) :
     state(state_name)
@@ -20,6 +21,7 @@ state_start::~state_start()
 void state_start::entry()
 {
     printf("void state_start::entry()\r\n");
+
     // this state has a child state machine
     if (mp_parent_machine != nullptr)
     {

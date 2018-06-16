@@ -102,6 +102,7 @@ namespace state_machine
     {
     public:
         machine(std::string name);
+        ~machine();
         void start(state *p_default_state);
         bool process_event(int event);
         void exit_machine() { m_machine_running = false; }

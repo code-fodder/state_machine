@@ -18,6 +18,20 @@ int main()
 //    sm.process_event(ev_middle);
 //    sm.process_event(ev_test1);
 
+    // For profiling test
+    std::cout << "Starting profile test...\r\n";
+    for (int i = 0; i < 1000000000; i++) {;}
+    std::cout << "done\r\n";
+
+    // For valgrind test
+    std::cout << "Starting memcheck test...\r\n";
+    int *p = new int();
+    std::cout << "\tp address: " << p << ", value: " << *p << "\r\n";
+    *p += 1;
+    std::cout << "\tp address: " << p << ", value: " << *p << "\r\n";
+    //delete p;
+    std::cout << "done\r\n";
+
     return 0;
 }
 

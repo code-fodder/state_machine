@@ -1,3 +1,5 @@
-*.pro.user
+*.user
 [Dd]ebug/
 [Rr]elease/
+obj/
+
