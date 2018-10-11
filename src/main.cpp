@@ -18,6 +18,8 @@ int main()
 //    sm.process_event(ev_middle);
 //    sm.process_event(ev_test1);
 
+// This is to force profiling / memcheck issues... probably remove this now...
+#if 0
     // For profiling test
     std::cout << "Starting profile test...\r\n";
     for (int i = 0; i < 1000000000; i++) {;}
@@ -31,7 +33,7 @@ int main()
     std::cout << "\tp address: " << p << ", value: " << *p << "\r\n";
     //delete p;
     std::cout << "done\r\n";
-
+#endif
     return 0;
 }
 

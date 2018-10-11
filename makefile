@@ -17,7 +17,7 @@ OBJECTS = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(patsubst src/%, %
 # Compiling
 CC = g++
 INC_PATHS = -I./src
-CFLAGS = -Wall -Werror -g -std=c++11 $(INC_PATHS)
+CFLAGS = -Wall -Wextra -Werror -g -std=c++11 $(INC_PATHS)
 LFLAGS = -lstdc++ $(CFLAGS)
 TARGET_FILE = state_machine_test
 
