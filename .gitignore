@@ -2,4 +2,6 @@
 [Dd]ebug/
 [Rr]elease/
 obj/
-
+.build_prerequisites
+bin/
+dep/
